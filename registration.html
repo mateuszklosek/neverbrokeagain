@@ -3,7 +3,7 @@
 <head>
 
 	<meta charset="utf-8">
-	<title>Logowanie</title>
+	<title>Rejestracja</title>
 	<meta name="description" content="Blog na temat ciekawych publikacji z dziedziny filozofii. Omówienie wybranych tekstów najsłynniejszych autorów!">
 	<meta name="keywords" content="filozofia, książki, blog, przemyślenia">
 	<meta name="author" content="Mortinez Walles">
@@ -12,6 +12,7 @@
 	
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="css/fontello.css">
+	<script src="registration.js"></script>
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
 	
@@ -31,37 +32,42 @@
 		<div class="dashboard">
 		
 			<span class="input-span" style="margin-top:45px;">
-				<i class="demo-icon icon-mail-alt"></i> 
+				<i class="demo-icon icon-user"></i>
 			</span>
+			
 			<div class="input-group" style="margin-top:30px; margin-bottom:5px;">
-					<input type="email" class="form-control" placeholder="E-mail" aria-label="email" name="email"  required autofocus>
+					<input type="text" class="form-control" placeholder="Imię" aria-label="imie" name="imie"  required>
 			</div>
 			
 			<div class="clearclass">
 			</div>
 			
 			<span class="input-span">
+				<i class="demo-icon icon-mail-alt"></i> 
+			</span>
+			
+			<div class="input-group" style=" margin-bottom:5px;">
+				<input type="email" class="form-control" placeholder="E-mail" aria-label="email" name="email"  required>
+			</div>
+			
+			<span class="input-span">
 				<i class="demo-icon icon-lock"></i>
 			</span>
-			<div class="input-group">
-				<input type="password" class="form-control" placeholder="Hasło" aria-label="hasło" name="password"  required>
+			
+			<div class="input-password">
+				<input type="password" class="form-control" placeholder="Hasło" aria-label="hasło" name="passwd" id="passwd" required>
+				<i class="demo-icon icon-eye" onClick="showPwd('passwd', this)"></i> 
 			</div>
 			
 			<div class="clearclass">
 			</div>
 				
-			<div style="margin-top:15px;" >
-				<input type="checkbox" class="custom-control-input" id="rememberMeCheckbox" name="remember_me" {% if remember_me %} checked="checked"{% endif %} >
-				<label class="custom-control-label" for="rememberMeCheckbox"> Zapamiętaj mnie!</label>
-			</div>
 			<div>
-				<input type="submit"  value="Zaloguj się"> 
+				<input type="submit"  value="Rejestracja"> 
 			</div>
+
 			<span class="menu-span">
-				<a href="/signup/index">Zapomniałes hasła?</a>
-			</span>
-			<span class="menu-span">
-				Nie masz konta? <a href="registration.html">Zarejestruj się.</a>
+				Masz konto? <a href="index.html">Zaloguj się.</a>
 			</span>
 		</div>
 			

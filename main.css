@@ -47,12 +47,13 @@ font-size: 40px;
 }
 
 input[type=email],
-input[type=password]
+input[type=password],
+input[type=text]
 {
-	width: 300px;
+	width: 302px;
 	background-color: #efefef;
 	color: #666;
-	border: 2px solid #ddd;
+	border: 1px solid #ddd;
 	border-radius:  0px 5px 5px 0px;
 	font-size: 20px;
 	padding: 10px;
@@ -63,7 +64,8 @@ input[type=password]
 }
 
 input[type=email]:focus,
-input[type=password]:focus
+input[type=password]:focus,
+input[type=text]:focus
 {
 	-webkit-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
 	-moz-box-shadow: 0px 0px 10px 2px rgba(204,204,204,0.9);
@@ -75,7 +77,7 @@ input[type=password]:focus
 
 input[type=submit]
 {
-	width: 344px;
+	width: 350px;
 	background-color:  #efefef;
 	font-size:20px;
 	color: black;
@@ -99,26 +101,30 @@ input[type=submit]:hover
 .input-group
 {
 float: left;
+}
 
-}.input-span
+.input-span
 {
 margin-top: 0px;
 float: left;
 background-color:  lightgrey;
 height: 20px;
-width: 20px;
+width: 26px;
 padding: 10px;
 border-right: 1px solid grey;
 margin-top: 15px;
-margin-left: 78px;
+margin-left: 75px;
 border-radius:  5px 0px 0px 5px;
 color: #495057;
+display: block;
+text-align: center;
 
 }
 .menu-span
 {
 display: block;
 margin-top:15px;
+text-align: center;
 }
 .clearclass
 {
@@ -151,4 +157,21 @@ clear: both;
 {
 	color: grey;
 	text-decoration: underline;
+}
+
+.input-password
+{
+float: left;
+position: relative;
+z-index:1;
+}
+
+
+.input-password i
+{
+		position: absolute;
+		top: 24px; 
+		right: 5px;
+		z-index: 2;
+		color: #495057;
 }
