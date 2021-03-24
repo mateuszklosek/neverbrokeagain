@@ -45,8 +45,15 @@ font-size: 40px;
 	margin-left: auto;
 	margin-right: auto;
 	text-align: justify;
-	padding-top: 10px;
+	padding: 10px;
 	text-align: center;
+	border: 2px solid	lightgrey;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border-radius: 10px;
+	-webkit-box-shadow: 1px 4px 26px 11px rgb(0 0 0 / 75%);
+    -moz-box-shadow: 1px 4px 26px 11px rgba(0,0,0,0.75);
+    box-shadow: 1px 4px 26px 11px rgb(0 0 0 / 75%);
 }
 
 
@@ -275,7 +282,7 @@ ol a
 ol > li
 {
 	float: left;
-	width: 180px;
+	width: 165px;
 	height: 40px;
 	border-right: 1px dashed #751b1b;
 }
