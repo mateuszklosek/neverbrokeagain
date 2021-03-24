@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+	<meta charset="utf-8">
+	<title>Dodawanie wydatku</title>
+	<meta name="description" content="Blog na temat ciekawych publikacji z dziedziny filozofii. Omówienie wybranych tekstów najsłynniejszych autorów!">
+	<meta name="keywords" content="filozofia, książki, blog, przemyślenia">
+	<meta name="author" content="Mortinez Walles">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge,chrome=1">
+	
+	<link rel="stylesheet" href="main.css">
+	<link rel="stylesheet" href="css/fontello.css">
+	<script src="script.js"></script>
+	
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+	
+	
+	
+	<!--[if lt IE 9]>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<![endif]-->
+	
+</head>
+
+<body>
+
+<div class="conteiner">
+	<div class="header">
+		<div class="logo2">
+			<h1>NEVER BROKE AGAIN</h1>
+		</div>
+	</div>
+	
+	<div class="nav">
+		<ol>
+				<li><a href="#">Dodaj przychód</a></li>
+				<li><a href="expenses.html">Dodaj wydatek</a></li>
+				<li><a href="#">Przeglądaj bilans</a></li>
+				<li><a href="#">Ustawienia</a></li>
+				<li><a href="index.html">Wyloguj się</a></li>
+		</ol>
+	</div>
+	
+	<div class="content1">
+				<div>
+				<h2>Dodawanie wydatku: </h2>
+				</div>
+				
+				<form action="order.php" method="post" enctype="multipart/form-data">
+	
+					<div>
+						<input type="number" class="form-control"  placeholder="Kwota" min="0" max="999999.99" step="0.01" aria-label="kwota" id="amount" name="amount" value="Kwota" required autofocus >
+					</div>
+					<div style="margin-top: 15px;">
+								<input id="transactionDate" type="date" class="form-control" aria-label="data" name="expenseDate"  value="Data" min="2000-01-01" ##max="{{ lastDate }}" required>
+					</div>
+					
+					<div>
+								<select id="paymentCategory" class="custom-select" data-live-search="true" name="paymentMethod">
+									<option value="0" selected>Sposób płatności:</option>
+									<option value="1">Gotówka</option>
+									<option value="2">Karta kredytowa</option>
+									<option value="3">Karta debetowa</option>
+								</select>
+					</div>
+					
+					<div>
+								<select id="expensesCategory" class="custom-select" data-live-search="true" name="expensesCategory">
+									<option value="0" selected>Kategoria:</option>
+									<option value="1">Mieszkanie</option>
+									<option value="2">Transport</option>
+									<option value="3">Telekomunikacja</option>
+									<option value="4">Opieka zdrowotna</option>
+									<option value="5">Ubranie</option>
+									<option value="6">Dzieci</option>
+									<option value="7">Higiena</option>
+									<option value="8">Rozrywka</option>
+									<option value="9">Wycieczka</option>
+									<option value="10">Szkolenia</option>
+									<option value="11">Książki</option>
+									<option value="12">Oszzczędności</option>
+									<option value="13">Na złotą jesień, czyli emeryturę</option>
+									<option value="14">Spłata długów</option>
+									<option value="15">Darowina</option>
+									<option value="16">Inne wydatki</option>						
+								</select>
+					</div>
+					<div style="margin-top: 15px;">
+						<div><label for="komentarz"> Komentarz (opcjonalnie):</label></div>
+						<textarea name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="10"></textarea>
+					</div>
+					<div>
+						<input id="a1" type="submit" value="Dodaj">
+						<input type="reset" value="Anuluj">
+					</div>
+					
+				</form>
+	</div>
+
+
+	
+
+<script src="jquery-3.2.1.min.js"></script>
+
+<script>
+	$(document).ready(function() {
+	var NavY = $('.nav').offset().top;
+	 
+	var stickyNav = function(){
+	var ScrollY = $(window).scrollTop();
+		  
+	if (ScrollY > NavY) { 
+		$('.nav').addClass('sticky');
+	} else {
+		$('.nav').removeClass('sticky'); 
+	}
+	};
+	 
+	stickyNav();
+	 
+	$(window).scroll(function() {
+		stickyNav();
+	});
+	});
+</script>
+
+</body>
+</html>
