@@ -12,9 +12,8 @@
 	<script src="jquery-3.2.1.min.js"></script>
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="css/fontello.css">
-	<script src="balance.js"></script>
-	
-	
+	<script src="balance.js"></script
+
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
 	
@@ -62,8 +61,95 @@
 			</select>
 		</div>
 		
+		<div style="margin-top: 50px;" class="table-div">
+		<div class="table-title">
+		<h3>Przychody</h3>
+		</div>
+			<table id="myTable2" class="table-style" style="margin: auto;" >
+				<thead style="text-align:center; background-color: grey; cursor: pointer;">
+				<tr>
+				<th style="width:240px;" onclick="sortTable(0)">Kategoria<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:240px;" onclick="sortTable(1)">Kwota<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:240px;" onclick="sortTable(2)">Data<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:240px;" onclick="sortTable(3)">Komentarz<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				<td>Wynagrodzenie</td>
+				<td>10000</td>
+				<td>2021-02-18</td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Inne</td>
+				<td>2000</td>
+				<td>2021-02-17</td>
+				<td>Sprzedaż na allegro</td>
+				</tr>
+				<tr>
+				<td>Inne</td>
+				<td>500</td>
+				<td>2021-01-18</td>
+				<td>500+</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 		
-		<div id="piechart"></div>
+		<div style="margin-top: 50px; margin-bottom:100px;" class="table-div">
+		<div class="table-title">
+		<h3>Wydatki</h3>
+		</div>
+			<table id="myTable3" class="table-style" style="margin: auto;" >
+				<thead style="text-align:center; background-color: grey; cursor: pointer;">
+				<tr>
+				<th style="width:192px;" onclick="sortTable(0)">Kategoria<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:192px;" onclick="sortTable(1)">Kwota<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:192px;" onclick="sortTable(2)">Metoda płatności<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:192px;" onclick="sortTable(3)">Data<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				<th style="width:192px;" onclick="sortTable(4)">Komentarz<span> <i class="demo-icon icon-arrow-combo"></i></span></th>
+				</tr>
+				</thead>
+				<tbody>
+				<tr>
+				<td>Ubrania</td>
+				<td>10000</td>
+				<td>Karta kredytowa</td>
+				<td>2021-02-18</td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Mieszkanie</td>
+				<td>2000</td>
+				<td>Karta debetowa</td>
+				<td>2021-02-17</td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Inne</td>
+				<td>500</td>
+				<td>Gotówka</td>
+				<td>2021-01-18</td>
+				<td></td>
+				</tr>
+				<tr>
+				<td>Jedzenie</td>
+				<td>500</td>
+				<td>Gotówka</td>
+				<td>2021-01-18</td>
+				<td></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+		
+		<div id="piechart1"></div>
+		<div style="float:left;" id="piechart2"></div>
+		<div style="float:left;" id="piechart3"></div>
+		<div style="clear:both;"> </div>
+		
+		
 		
 		
 		
@@ -100,6 +186,121 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable2");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+<script>
+function sortTable(n) {
+  var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+  table = document.getElementById("myTable3");
+  switching = true;
+  // Set the sorting direction to ascending:
+  dir = "asc";
+  /* Make a loop that will continue until
+  no switching has been done: */
+  while (switching) {
+    // Start by saying: no switching is done:
+    switching = false;
+    rows = table.rows;
+    /* Loop through all table rows (except the
+    first, which contains table headers): */
+    for (i = 1; i < (rows.length - 1); i++) {
+      // Start by saying there should be no switching:
+      shouldSwitch = false;
+      /* Get the two elements you want to compare,
+      one from current row and one from the next: */
+      x = rows[i].getElementsByTagName("TD")[n];
+      y = rows[i + 1].getElementsByTagName("TD")[n];
+      /* Check if the two rows should switch place,
+      based on the direction, asc or desc: */
+      if (dir == "asc") {
+        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      } else if (dir == "desc") {
+        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+          // If so, mark as a switch and break the loop:
+          shouldSwitch = true;
+          break;
+        }
+      }
+    }
+    if (shouldSwitch) {
+      /* If a switch has been marked, make the switch
+      and mark that a switch has been done: */
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+      // Each time a switch is done, increase this count by 1:
+      switchcount ++;
+    } else {
+      /* If no switching has been done AND the direction is "asc",
+      set the direction to "desc" and run the while loop again. */
+      if (switchcount == 0 && dir == "asc") {
+        dir = "desc";
+        switching = true;
+      }
+    }
+  }
+}
+</script>
+
+
 <script type="text/javascript">
 
 google.charts.load('current', {'packages':['corechart']});
@@ -107,19 +308,60 @@ google.charts.setOnLoadCallback(drawChart);
 
 function drawChart() {
   var data = google.visualization.arrayToDataTable([
-  ['Task', 'Hours per Day'],
-  ['Work', 8],
-  ['Eat', 2],
-  ['TV', 4],
-  ['Gym', 2],
-  ['Sleep', 8]
+  ['What', 'How'],
+  ['Wydatki', 3500],
+  ['Przychody', 12000],
 ]);
 
   // Optional; add a title and set the width and height of the chart
-  var options = {'title':'My Average Day', 'width':550, 'height':400, backgroundColor: 'transparent', legend: {textStyle: {color: 'lightgrey'}},  titleTextStyle: {color: 'lightgrey', fontSize:'16'}};
+  var options = {'title':'Bilans', 'width':550, 'height':300, backgroundColor: 'transparent', legend: {textStyle: {color: 'lightgrey'}},  titleTextStyle: {color: 'lightgrey', fontSize:'16'}};
 
   // Display the chart inside the <div> element with id="piechart"
-  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+  var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+  chart.draw(data, options);
+}
+</script>
+
+<script type="text/javascript">
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Przychod', 'Ile'],
+  ['Ubrania', 200],
+  ['Mieszkanie', 2500],
+  ['Jedzenie', 1000],
+  ['Inne', 500],
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Przychody', 'width':500, 'height':300, backgroundColor: 'transparent', legend: {textStyle: {color: 'lightgrey'}},  titleTextStyle: {color: 'lightgrey', fontSize:'16'}};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+  chart.draw(data, options);
+}
+</script>
+
+<script type="text/javascript">
+
+google.charts.load('current', {'packages':['corechart']});
+google.charts.setOnLoadCallback(drawChart);
+
+function drawChart() {
+  var data = google.visualization.arrayToDataTable([
+  ['Wydatek', 'Ile'],
+  ['Wynagrodzenie', 10000],
+  ['Inne', 2500],
+]);
+
+  // Optional; add a title and set the width and height of the chart
+  var options = {'title':'Wydatki', 'width':500, 'height':300, backgroundColor: 'transparent', legend: {textStyle: {color: 'lightgrey'}},  titleTextStyle: {color: 'lightgrey', fontSize:'16'}};
+
+  // Display the chart inside the <div> element with id="piechart"
+  var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
   chart.draw(data, options);
 }
 </script>
