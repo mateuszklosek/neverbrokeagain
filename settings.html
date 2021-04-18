@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
+	<title>Dodawanie wydatku</title>
+	<meta name="description" content="Aplikacja do zarządzania finansami.">
+	<meta name="keywords" content="pieniadze, finanse, zarzadzanie, oszczedzanie">
+	<meta name="author" content="Mateusz Kłosek">
+	
+	<meta http-equiv="X-Ua-Compatible" content="IE=edge,chrome=1">
+	
+	<script src="script.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+	<link rel="stylesheet" href="main.css">
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+	<link rel="stylesheet" href="css/fontello.css">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
+	
+	<script src="sortTable.js"></script>
+	
+	
+	
+	<!--[if lt IE 9]>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<![endif]-->
+	
+</head>
+
+<body>
+
+	<header>
+		
+		<div class="text-center">
+		
+			<div class="text-center my-5 mx-3">
+				<a href="main.html"><img class="img-fluid  border rounded"  src="img/Logo1.png" alt="logo"></a>
+			</div>
+		
+		</div>
+		
+		<nav class="navbar navbar-light bg-light navbar-expand-md text-center">
+		
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="mainmenu">
+			
+				<ul class="navbar-nav mr-auto">
+				
+					<li class="nav-item">
+						<a href="main.html">Strona główna</a>
+					</li>
+					<li class="nav-item">
+						<a href="incomes.html">Dodaj przychód</a>
+					</li>
+					<li class="nav-item">	
+						<a href="expenses.html">Dodaj wydatek</a>
+					</li>
+					<li class="nav-item">
+						<a href="balance.html">Przeglądaj bilans</a>
+					</li>
+					<li class="nav-item">
+						<a href="settings.html">Ustawienia</a>
+					</li>
+					<li class="nav-item">
+						<a href="index.html">Wyloguj się</a>
+					</li>
+					
+				</ul>
+			
+			</div>
+			
+		</nav>
+				
+	</header>
+	
+	<main>
+	
+		<section>
+			
+			<div class="container col-11 col-lg-5 text-center mt-5">
+			
+				<header>
+						<h3 class="h4 my-4">Ustawienia</h3>
+				</header>
+				
+					<div id="accordion">
+					  <div class="card bg-dark">
+						<div class="card-header" id="headingOne">
+						  <h5 class="mb-0">
+							<button class="btn btn-light collapsed btn-block font-weight-bold" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+							  <i class="fa setting-icon" aria-hidden="true"></i> 
+							  Kategorie przychodów
+							</button>
+						  </h5>
+						</div>
+						<div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+						  <div class="card-body text-left">
+						  
+							<table id="tableOfIncomesCategories" class="table table-hover table-active text-white table-sm table-text">
+							
+								<thead>	
+									<tr>
+									<th onclick="sortTableAlphabetically('tableOfIncomesCategories')" scope="col">Kategoria <i class="demo-icon icon-arrow-combo"></i></th>
+									<th scope="col" style="width: 5%"></th>
+									</tr>
+								</thead>
+								
+								<tbody>
+									<tr data-toggle="modal" data-target="#modal-przychody-1">
+									<td >Wynagrodzenie</td>
+									<td> <i class="bi bi-pencil-square"></i></td>
+									</tr>
+									<tr data-toggle="modal" data-target="#modal-przychody-2">
+									<td>Sprzedaż internetowa</td>
+									<td> <i class="bi bi-pencil-square edit-icon"></i></td>
+									</tr>
+								</tbody>
+							</table>		
+						  
+							<button type="button" class="btn btn-secondary btn-block font-weight-bold" data-toggle="modal" data-target="#nowa-kategoria-1">
+							<i class="bi bi-plus-circle float-left"></i>
+							  Dodaj nową kategorię
+							</button>
+							
+						  </div>
+						</div>
+					  </div>
+					  
+						<div class="modal fade " id="modal-przychody-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Edytuj kategorię przychodów</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Wynagrodzenie" aria-label="Wynagrodzenie" name="Wynagrodzenie"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Usuń kategorię</button>
+									<button type="button" class="btn btn-dark">Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+						<div class="modal fade " id="modal-przychody-2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Edytuj kategorię przychodów</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Sprzedaż internetowa" aria-label="Sprzedaż internetowa" name="Sprzedaż internetowa"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Usuń kategorię</button>
+									<button type="button" class="btn btn-dark">Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+						<div class="modal fade " id="nowa-kategoria-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Dodaj nową kategorię</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Nowa kategoria" aria-label="Nowa kategoria" name="Nowa kategoria"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-dark">Dodaj</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+					  
+					  <div class="card bg-dark">
+							<div class="card-header" id="headingTwo">
+							  <h5 class="mb-0">
+								<button class="btn btn-light collapsed btn-block font-weight-bold" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+								  <i class="fa setting-icon" aria-hidden="true"></i> 
+								  Kategorie wydatków
+								</button>
+							  </h5>
+							</div>
+							<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+							  <div class="card-body  text-left">
+							  
+								<table id="tableOfExpensesCategories" class="table table-hover table-active text-white table-sm table-text">
+								
+									<thead>	
+										<tr>
+										<th onclick="sortTableAlphabetically('tableOfExpensesCategories')" scope="col">Kategoria <i class="demo-icon icon-arrow-combo"></i></th>
+										<th scope="col" style="width: 5%"></th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr data-toggle="modal" data-target="#modal-wydatki-1">
+										<td >Mieszkanie</td>
+										<td> <i class="bi bi-pencil-square"></i></td>
+										</tr>
+										<tr data-toggle="modal" data-target="#modal-wydatki-2">
+										<td >Jedzenie</td>
+										<td> <i class="bi bi-pencil-square"></i></td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<button type="button" class="btn btn-secondary btn-block font-weight-bold" data-toggle="modal" data-target="#nowa-kategoria-2">
+									<i class="bi bi-plus-circle float-left"></i>
+								  Dodaj nową kategorię
+								</button>
+							
+							  </div>
+							</div>
+					  </div>
+					  
+					  <div class="modal fade " id="modal-wydatki-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Edytuj kategorię wydatków</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Mieszkanie" aria-label="Mieszkanie" name="Mieszkanie"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Usuń kategorię</button>
+									<button type="button" class="btn btn-dark">Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+						<div class="modal fade " id="modal-wydatki-2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Edytuj kategorię wydatków</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Jedzenie" aria-label="Jedzenie" name="Jedzenie"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Usuń kategorię</button>
+									<button type="button" class="btn btn-dark">Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+						<div class="modal fade " id="nowa-kategoria-2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Dodaj nową kategorię</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Nowa kategoria" aria-label="Nowa kategoria" name="Nowa kategoria"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-dark">Dodaj</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+					
+					  
+					  <div class="card bg-dark">
+						<div class="card-header" id="headingThree">
+						  <h5 class="mb-0">
+							<button class="btn btn-light collapsed btn-block font-weight-bold" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+							  <i class="fa setting-icon" aria-hidden="true"></i> 
+							  Sposoby płatności
+							</button>
+						  </h5>
+						</div>
+						<div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+						  <div class="card-body  text-left">
+							
+							<table id="tableOfPaymentCategories" class="table table-hover table-active text-white table-sm table-text">
+								
+									<thead>	
+										<tr>
+										<th onclick="sortTableAlphabetically('tableOfPaymentCategories')" scope="col">Kategoria <i class="demo-icon icon-arrow-combo"></i></th>
+										<th scope="col" style="width: 5%"></th>
+										</tr>
+									</thead>
+									
+									<tbody>
+										<tr data-toggle="modal" data-target="#modal-platnosci-1">
+										<td >Gotówka</td>
+										<td> <i class="bi bi-pencil-square"></i></td>
+										</tr>
+									</tbody>
+								</table>
+								
+								<button type="button" class="btn btn-secondary btn-block font-weight-bold" data-toggle="modal" data-target="#nowa-kategoria-3">
+									<i class="bi bi-plus-circle float-left"></i>
+								  Dodaj nową kategorię
+								</button>
+							
+						  </div>
+						</div>
+					  </div>
+					  
+					  <div class="modal fade " id="modal-platnosci-1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Edytuj kategorię płatności</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Gotówka" aria-label="Gotówka" name="Gotówka"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Usuń kategorię</button>
+									<button type="button" class="btn btn-dark">Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+						<div class="modal fade " id="nowa-kategoria-3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Dodaj nową kategorię</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="bi bi-cart"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Nowa kategoria" aria-label="Nowa kategoria" name="Nowa kategoria"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-dark">Dodaj</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+					  
+					   <div class="card bg-dark mb-5">
+						<div class="card-header" id="headingFour">
+						  <h5 class="mb-0">
+							<button class="btn btn-light collapsed btn-block font-weight-bold" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+							  <i class="fa setting-icon" aria-hidden="true"></i> 
+							  Zarządzaj kontem
+							</button>
+						  </h5>
+						</div>
+						<div id="collapseFour" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
+						  <div class="card-body">
+							<div class="mb-3">
+								<button type="button" data-toggle="modal" data-target="#modal-edytuj-profil" class="btn btn-secondary gy-5">Edytuj profil</button>
+							</div>
+							<div>
+								<button type="button" data-toggle="modal" data-target="#modal-zmien-haslo" class="btn btn-secondary">Zmień hasło</button>
+							</div>
+						  </div>
+						</div>
+					  </div>
+					  
+					  <div class="modal fade " id="modal-edytuj-profil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Edytuj profil</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+								  
+									<div class="input-group input-group-lg mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="demo-icon icon-user"></i></span>
+										</div>
+										<input type="text" class="form-control" placeholder="Nowe imię" aria-label="nowe imię" name="imie" >
+									</div>
+									
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="demo-icon icon-mail-alt"></i> </span>
+										</div>
+										<input type="email" class="form-control" placeholder="Nowy e-mail" aria-label="nowy e-mail" name="email"  required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-dark">Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+						
+						<div class="modal fade " id="modal-zmien-haslo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="modal-dialog modal-dialog-centered ">
+								<div class="modal-content text-dark">
+								  <div class="modal-header">
+									<h4 class="modal-title" id="exampleModalLabel">Zmień hasło</h4>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									  <span aria-hidden="true">&times;</span>
+									</button>
+								  </div>
+								  
+								  <div class="modal-body">
+									<div class="input-group input-group-lg mb-3">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="demo-icon icon-lock"></i></span>
+										</div>
+										<input type="password" class="form-control" placeholder="Nowe hasło" aria-label="nowe hasło" name="passwd" id="passwd" required>
+									</div>
+									<div class="input-group input-group-lg">
+										<div class="input-group-prepend">
+											<span class="input-group-text"><i class="demo-icon icon-lock"></i></span>
+										</div>
+										<input type="password" class="form-control" placeholder="Powtórz nowe hasło" aria-label="powtorz hasło" name="passwd" id="passwd" required>
+									</div>
+								  </div>
+								  
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-dark" >Zapisz</button>
+								  </div>
+								</div>
+							  </div>
+						</div>
+					  
+							
+					</div>
+
+			</div>
+
+		</section>
+		
+	</main>
+	
+	<footer class="text-center mb-5" style="font-size: 12px;">
+			All rights reserved © 2021, Never broke again created by Mati
+	</footer>
+
+
+	
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
+
+</body>
+</html>

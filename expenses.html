@@ -3,19 +3,22 @@
 <head>
 
 	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	
 	<title>Dodawanie wydatku</title>
-	<meta name="description" content="Blog na temat ciekawych publikacji z dziedziny filozofii. Omówienie wybranych tekstów najsłynniejszych autorów!">
-	<meta name="keywords" content="filozofia, książki, blog, przemyślenia">
-	<meta name="author" content="Mortinez Walles">
+	<meta name="description" content="Aplikacja do zarządzania finansami.">
+	<meta name="keywords" content="pieniadze, finanse, zarzadzanie, oszczedzanie">
+	<meta name="author" content="Mateusz Kłosek">
 	
 	<meta http-equiv="X-Ua-Compatible" content="IE=edge,chrome=1">
 	
+	<script src="script.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 	<link rel="stylesheet" href="main.css">
 	<link rel="stylesheet" href="css/fontello.css">
-	<script src="script.js"></script>
-	
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
 	
 	
 	
@@ -27,106 +30,160 @@
 
 <body>
 
-<div class="conteiner">
-	<div class="header">
-		<div class="logo2">
-			<h1>NEVER BROKE AGAIN</h1>
+	<header>
+		
+		<div class="text-center">
+		
+			<div class="text-center my-5 mx-3">
+				<a href="main.html"><img class="img-fluid  border rounded"  src="img/Logo1.png" alt="logo"></a>
+			</div>
+		
 		</div>
-	</div>
-	
-	<div class="nav">
-		<ol>
-				<li><a href="main.html">Strona główna</a></li>
-				<li><a href="#">Dodaj przychód</a></li>
-				<li><a href="expenses.html">Dodaj wydatek</a></li>
-				<li><a href="balance.html">Przeglądaj bilans</a></li>
-				<li><a href="#">Ustawienia</a></li>
-				<li><a href="index.html">Wyloguj się</a></li>
-		</ol>
-	</div>
-	
-	<div class="content1">
-				<div>
-				<h2>Dodawanie wydatku: </h2>
-				</div>
+		
+		<nav class="navbar navbar-light bg-light navbar-expand-md text-center">
+		
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainmenu" aria-controls="mainmenu" aria-expanded="false" aria-label="Przełącznik nawigacji">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<div class="collapse navbar-collapse" id="mainmenu">
+			
+				<ul class="navbar-nav mr-auto">
 				
-				<form action="order.php" method="post" enctype="multipart/form-data">
+					<li class="nav-item">
+						<a href="main.html">Strona główna</a>
+					</li>
+					<li class="nav-item">
+						<a href="incomes.html">Dodaj przychód</a>
+					</li>
+					<li class="nav-item">	
+						<a href="expenses.html">Dodaj wydatek</a>
+					</li>
+					<li class="nav-item">
+						<a href="balance.html">Przeglądaj bilans</a>
+					</li>
+					<li class="nav-item">
+						<a href="settings.html">Ustawienia</a>
+					</li>
+					<li class="nav-item">
+						<a href="index.html">Wyloguj się</a>
+					</li>
+					
+				</ul>
+			
+			</div>
+			
+		</nav>
+				
+	</header>
 	
-					<div>
-						<input type="number" class="form-control"  placeholder="Kwota" min="0" max="999999.99" step="0.01" aria-label="kwota" id="amount" name="amount" value="Kwota" required autofocus >
-					</div>
-					<div style="margin-top: 15px;">
-								<input id="transactionDate" type="date" class="form-control" aria-label="data" name="expenseDate"  value="Data" min="2000-01-01" ##max="{{ lastDate }}" required>
-					</div>
-					
-					<div>
-								<select id="paymentCategory" class="custom-select" data-live-search="true" name="paymentMethod">
-									<option value="0" selected disabled>Sposób płatności:</option>
-									<option value="1">Gotówka</option>
-									<option value="2">Karta kredytowa</option>
-									<option value="3">Karta debetowa</option>
-								</select>
-					</div>
-					
-					<div>
-								<select id="expensesCategory" class="custom-select" data-live-search="true" name="expensesCategory">
-									<option value="0" selected disabled>Kategoria:</option>
-									<option value="1">Mieszkanie</option>
-									<option value="2">Transport</option>
-									<option value="3">Telekomunikacja</option>
-									<option value="4">Opieka zdrowotna</option>
-									<option value="5">Ubranie</option>
-									<option value="6">Dzieci</option>
-									<option value="7">Higiena</option>
-									<option value="8">Rozrywka</option>
-									<option value="9">Wycieczka</option>
-									<option value="10">Szkolenia</option>
-									<option value="11">Książki</option>
-									<option value="12">Oszzczędności</option>
-									<option value="13">Na złotą jesień, czyli emeryturę</option>
-									<option value="14">Spłata długów</option>
-									<option value="15">Darowina</option>
-									<option value="16">Inne wydatki</option>						
-								</select>
-					</div>
-					<div style="margin-top: 15px;">
-						<div><label for="komentarz"> Komentarz (opcjonalnie):</label></div>
-						<textarea name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="10"></textarea>
-					</div>
-					<div style="margin-bottom: 30px;">
-						<input id="a1" type="submit" value="Dodaj">
-						<input type="reset" value="Anuluj">
+	<main>
+	
+		<section>
+			
+			<div class="container col-11 col-lg-5 text-center mt-5">
+			
+				<header>
+						<h3 class="h4 mt-4">Dodawanie wydatku</h3>
+				</header>
+				
+				
+					<form action="order.php" method="post" enctype="multipart/form-data">
+
+					<div class="input-center">
+						<span class="span-style">
+							<i class="bi bi-wallet-fill"></i>
+						</span>
+						<div class="input-style" style="float: left;">
+							<input type="number" class="form-control"  placeholder="Kwota" min="0" max="999999.99" step="0.01" aria-label="kwota" id="amount" name="amount" value="Kwota" required autofocus >
+						</div>
+						<div class="clearclass">
+						</div>
 					</div>
 					
-				</form>
-	</div>
+					<div class="input-center">
+						<span class="span-style">
+							<i class="bi bi-calendar"></i>
+						</span>
+						<div class="input-style" style="float: left;">
+							<input id="transactionDate" type="date" class="form-control" aria-label="data" name="expenseDate"  value="Data" min="2000-01-01" ##max="{{ lastDate }}" required>
+						</div>
+						<div class="clearclass">
+						</div>
+					</div>
+						
+					<div class="input-center">
+						<span class="span-style">
+							<i class="bi bi-card-list"></i>
+						</span>
+						<div class="input-style" style="float: left;">
+							<select id="paymentCategory" data-live-search="true" name="paymentMethod">
+								<option value="0" selected disabled>Sposób płatności:</option>
+								<option value="1">Gotówka</option>
+								<option value="2">Karta kredytowa</option>
+								<option value="3">Karta debetowa</option>
+							</select>
+						</div>
+						<div class="clearclass">
+						</div>	
+					</div>
+					
+					<div class="input-center">
+						<span class="span-style">
+							<i class="bi bi-cart"></i>
+						</span>
+						<div class="input-style" style="float: left;">
+							<select id="expensesCategory" data-live-search="true" name="expensesCategory">
+								<option value="0" selected disabled>Kategoria:</option>
+								<option value="1">Mieszkanie</option>
+								<option value="2">Transport</option>
+								<option value="3">Telekomunikacja</option>
+								<option value="4">Opieka zdrowotna</option>
+								<option value="5">Ubranie</option>
+								<option value="6">Dzieci</option>
+								<option value="7">Higiena</option>
+								<option value="8">Rozrywka</option>
+								<option value="9">Wycieczka</option>
+								<option value="10">Szkolenia</option>
+								<option value="11">Książki</option>
+								<option value="12">Oszzczędności</option>
+								<option value="13">Na złotą jesień, czyli emeryturę</option>
+								<option value="14">Spłata długów</option>
+								<option value="15">Darowina</option>
+								<option value="16">Inne wydatki</option>						
+									</select>
+							</select>
+						</div>
+						<div class="clearclass">
+						</div>	
+					</div>
+					
+						<div style="margin-top: 15px;">
+							<div><label for="komentarz"> Komentarz (opcjonalnie):</label></div>
+							<textarea name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="10"></textarea>
+						</div>
+						<div style="margin-bottom: 30px;">
+							<input id="a1" type="submit" value="Dodaj">
+							<input id="a2" type="reset" value="Anuluj">
+						</div>
+						
+					</form>
+
+			</div>
+			
+		</section>
+		
+	</main>
+	
+	<footer class="text-center mb-5" style="font-size: 12px;">
+			All rights reserved © 2021, Never broke again created by Mati
+	</footer>
 
 
 	
 
-<script src="jquery-3.2.1.min.js"></script>
-
-<script>
-	$(document).ready(function() {
-	var NavY = $('.nav').offset().top;
-	 
-	var stickyNav = function(){
-	var ScrollY = $(window).scrollTop();
-		  
-	if (ScrollY > NavY) { 
-		$('.nav').addClass('sticky');
-	} else {
-		$('.nav').removeClass('sticky'); 
-	}
-	};
-	 
-	stickyNav();
-	 
-	$(window).scroll(function() {
-		stickyNav();
-	});
-	});
-</script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 </body>
 </html>
