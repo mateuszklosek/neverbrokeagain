@@ -1,3 +1,14 @@
+<?php
+
+session_start();
+
+if(isset($_SESSION['logged_id'])) {
+header('Location: main.php');	
+exit();
+} 
+
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -43,44 +54,56 @@
 						<h1 class="h4" style="margin-top:45px;"> Logowanie użytkownika </h1>
 						</header>
 						
-						<div class="input-center">
-							<span class="span-style">
-								<i class="demo-icon icon-mail-alt"></i> 
-							</span>
-							<div class="input-style" style="float: left;">
-									<input type="email" class="form-control" placeholder="E-mail" aria-label="email" name="email"  required autofocus>
-							</div>
-							<div class="clearclass">
-							</div>
-						</div>
+						<form class="row text-center" method="post" action="main.php">
 						
-						
-						<div class="input-center">
-							<span class="span-style">
-								<i class="demo-icon icon-lock"></i>
-							</span>
-							<div class="input-style" style="float: left;">
-								<input type="password" class="form-control" placeholder="Hasło" aria-label="hasło" name="password"  required>
+							<div class="input-center">
+								<span class="span-style">
+									<i class="demo-icon icon-mail-alt"></i> 
+								</span>
+								<div class="input-style" style="float: left;">
+										<input type="email" class="form-control" placeholder="E-mail" aria-label="email" name="email" <?= isset($_SESSION['bad_attempt']) ? 'value="'.$_SESSION['given_email'] . '"' : '' ?> required>
+								</div>
+								<div class="clearclass">
+								</div>
 							</div>
-							<div class="clearclass">
-							</div>
-						</div>
 							
-						<div style="margin-top:15px; width: 100%;" >
-							<input type="checkbox" class="custom-control-input" id="rememberMeCheckbox" name="remember_me" checked="checked" >
-							<label class="custom-control-label" for="rememberMeCheckbox"> Zapamiętaj mnie!</label>
-						</div>
-						
-						<div class="input-center">
-							<input type="submit"  value="Zaloguj się"> 
-						</div>
+							
+							<div class="input-center">
+								<span class="span-style">
+									<i class="demo-icon icon-lock"></i>
+								</span>
+								<div class="input-style" style="float: left;">
+									<input type="password" class="form-control" placeholder="Hasło" aria-label="hasło" name="password"  required>
+								</div>
+								<div class="clearclass">
+								</div>
+							</div>
+								
+							<div style="margin-top:15px; width: 100%;" >
+								<input type="checkbox" class="custom-control-input" id="rememberMeCheckbox" name="remember_me" checked="checked" >
+								<label class="custom-control-label" for="rememberMeCheckbox"> Zapamiętaj mnie!</label>
+							</div>
+							
+							<div class="input-center">
+								<input type="submit"  value="Zaloguj się">
+							</div>
+							
+							
+							<?php
+									if (isset($_SESSION['bad_attempt'])) {
+										echo '<p class="input-center mt-2 text-danger">Niepoprawny login lub hasło!</p>';
+										unset($_SESSION['bad_attempt']);
+									}
+								?>
+
+						</form>
 						
 						<span class="menu-span">
 							<a href="/signup/index">Zapomniałes hasła?</a>
 						</span>
 						
 						<span class="menu-span mb-4">
-							Nie masz konta? <a href="registration.html">Zarejestruj się.</a>
+							Nie masz konta? <a href="registration.php">Zarejestruj się.</a>
 						</span>
 					
 				</div>

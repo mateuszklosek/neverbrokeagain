@@ -1,3 +1,60 @@
+<?php
+session_start();
+
+
+if(isset($_SESSION['logged_id'])) {
+	
+	
+	require_once 'database.php';
+	
+	$user_id = $_SESSION['logged_id'];
+	
+	//kategorie wydatkow
+	
+	$categoriesEQuery = $db->prepare('SELECT id, name FROM expenses_category_assigned_to_users WHERE user_id = :user_id');
+	$categoriesEQuery->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+	$categoriesEQuery->execute();
+	$categoriesE = $categoriesEQuery ->fetchAll();
+	
+	//kategorie metod wydatkow
+	
+	$categoriesMQuery = $db->prepare('SELECT id, name FROM payment_methods_assigned_to_users WHERE user_id = :user_id');
+	$categoriesMQuery->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+	$categoriesMQuery->execute();
+	$categoriesM = $categoriesMQuery ->fetchAll();
+	
+	
+	
+
+	if (isset($_POST['amount'])) {
+	
+		$amount = $_POST['amount'];
+		$date_of_expense = $_POST['expenseDate'];
+		$expense_comment = $_POST['comment'];
+		$paymentMethod = $_POST['paymentMethod'];
+		$expenseCategory = $_POST['expenseCategory'];
+		
+		$query = $db->prepare('INSERT INTO expenses VALUES (NULL, :user_id, :expense_category_assigned_to_user_id, :payment_method_assigned_to_user_id, :amount, :date_of_expense, :expense_comment)');
+		$query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$query->bindValue(':expense_category_assigned_to_user_id', $expenseCategory, PDO::PARAM_STR);
+		$query->bindValue(':payment_method_assigned_to_user_id', $paymentMethod, PDO::PARAM_STR);
+		$query->bindValue(':amount', $amount, PDO::PARAM_STR);
+		$query->bindValue(':date_of_expense', $date_of_expense, PDO::PARAM_STR);
+		$query->bindValue(':expense_comment', $expense_comment, PDO::PARAM_STR);
+		$query->execute();
+		$_SESSION['wydatek_dodany']="Wydatek został dodany pomyślnie!"; 
+		
+	}
+
+		
+
+	} else {	
+		header('Location: index.php');
+		exit();	
+	}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -5,7 +62,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-	<title>Dodawanie przychodu</title>
+	<title>Dodawanie wydatku</title>
 	<meta name="description" content="Aplikacja do zarządzania finansami.">
 	<meta name="keywords" content="pieniadze, finanse, zarzadzanie, oszczedzanie">
 	<meta name="author" content="Mateusz Kłosek">
@@ -51,22 +108,22 @@
 				<ul class="navbar-nav mr-auto">
 				
 					<li class="nav-item">
-						<a href="main.html">Strona główna</a>
+						<a href="main.php">Strona główna</a>
 					</li>
 					<li class="nav-item">
-						<a href="incomes.html">Dodaj przychód</a>
+						<a href="incomes.php">Dodaj przychód</a>
 					</li>
 					<li class="nav-item">	
-						<a href="expenses.html">Dodaj wydatek</a>
+						<a href="expenses.php">Dodaj wydatek</a>
 					</li>
 					<li class="nav-item">
-						<a href="balance.html">Przeglądaj bilans</a>
+						<a href="balance.php">Przeglądaj bilans</a>
 					</li>
 					<li class="nav-item">
-						<a href="settings.html">Ustawienia</a>
+						<a href="settings.php">Ustawienia</a>
 					</li>
 					<li class="nav-item">
-						<a href="index.html">Wyloguj się</a>
+						<a href="index.php">Wyloguj się</a>
 					</li>
 					
 				</ul>
@@ -84,11 +141,19 @@
 			<div class="container col-11 col-lg-5 text-center mt-5">
 			
 				<header>
-						<h3 class="h4 mt-4">Dodawanie przychodu</h3>
+						<h3 class="h4 mt-4">Dodawanie wydatku</h3>
 				</header>
 				
 				
-					<form action="order.php" method="post" enctype="multipart/form-data">
+					<form method="post">
+					
+					<?php
+								if (isset($_SESSION['wydatek_dodany']))
+								{
+									echo '<div class="text-success center mt-2">'.$_SESSION['wydatek_dodany'].'</div>';
+									unset($_SESSION['wydatek_dodany']);
+								}
+						?>
 
 					<div class="input-center">
 						<span class="span-style">
@@ -106,10 +171,28 @@
 							<i class="bi bi-calendar"></i>
 						</span>
 						<div class="input-style" style="float: left;">
-							<input id="transactionDate" type="date" class="form-control" aria-label="data" name="expenseDate"  value="Data" min="2000-01-01" max="{{ lastDate }}" required>
+							<input id="transactionDate" type="date" class="form-control" aria-label="data" name="expenseDate"  value="Data" min="2000-01-01" required>
 						</div>
 						<div class="clearclass">
 						</div>
+					</div>
+						
+					<div class="input-center">
+						<span class="span-style">
+							<i class="bi bi-card-list"></i>
+						</span>
+						<div class="input-style" style="float: left;">
+							<select id="paymentCategory" data-live-search="true" name="paymentMethod">
+								<option value="0" selected disabled>Sposób płatności:</option>
+								<?php
+									foreach ($categoriesM as $categoryM) {
+										echo "<option value='{$categoryM["id"]}'> {$categoryM["name"]} </option>";
+									}
+								?>			
+							</select>
+						</div>
+						<div class="clearclass">
+						</div>	
 					</div>
 					
 					<div class="input-center">
@@ -117,13 +200,14 @@
 							<i class="bi bi-cart"></i>
 						</span>
 						<div class="input-style" style="float: left;">
-							<select id="expensesCategory" data-live-search="true" name="expensesCategory">
+							<select id="expensesCategory" data-live-search="true" name="expenseCategory">
 								<option value="0" selected disabled>Kategoria:</option>
-								<option value="1">Wynagrodzenie</option>
-								<option value="2">Odsetki bankowe</option>
-								<option value="3">Sprzedaż internetowa</option>
-								<option value="4">Prezent</option>
-								<option value="5">Inne</option>					
+								<?php
+									foreach ($categoriesE as $categoryE) {
+										echo "<option value='{$categoryE["id"]}'> {$categoryE["name"]} </option>";
+									}
+								?>			
+									</select>
 							</select>
 						</div>
 						<div class="clearclass">
@@ -131,8 +215,8 @@
 					</div>
 					
 						<div style="margin-top: 15px;">
-							<div><label for="comment"> Komentarz (opcjonalnie):</label></div>
-							<textarea  name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="10"></textarea>
+							<div><label for="komentarz"> Komentarz (opcjonalnie):</label></div>
+							<textarea name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="1"></textarea>
 						</div>
 						<div style="margin-bottom: 30px;">
 							<input id="a1" type="submit" value="Dodaj">

@@ -20,6 +20,14 @@ h1
 	font-size: 40px;
 }
 
+.blad
+{
+	font-size: 30px;
+	color: red;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
 .container
 {
 	margin-top: 200px;

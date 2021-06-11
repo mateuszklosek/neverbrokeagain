@@ -1,3 +1,32 @@
+<?php
+
+	session_start();
+	
+	if (!isset($_SESSION['udanarejestracja']))
+	{
+		header('Location: index.php');
+		exit();
+	}
+	else
+	{
+		unset($_SESSION['udanarejestracja']);
+	}
+
+	
+	
+	//Usuwanie zmiennych pamiętających wartości wpisane do formularza
+	if (isset($_SESSION['fr_imie'])) unset($_SESSION['fr_imie']);
+	if (isset($_SESSION['fr_email'])) unset($_SESSION['fr_email']);
+	if (isset($_SESSION['fr_haslo1'])) unset($_SESSION['fr_haslo1']);
+	if (isset($_SESSION['fr_haslo2'])) unset($_SESSION['fr_haslo2']);
+	
+	//Usuwanie błędów rejestracji
+	if (isset($_SESSION['e_imie'])) unset($_SESSION['e_imie']);
+	if (isset($_SESSION['e_email'])) unset($_SESSION['e_email']);
+	if (isset($_SESSION['e_haslo'])) unset($_SESSION['e_haslo']);
+	if (isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
+	
+?>
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -5,7 +34,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-	<title>Rejestracja</title>
+	<title>Witamy!</title>
 	<meta name="description" content="Aplikacja do zarządzania finansami.">
 	<meta name="keywords" content="pieniadze, finanse, zarzadzanie, oszczedzanie">
 	<meta name="author" content="Mateusz Kłosek">
@@ -18,6 +47,11 @@
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&amp;subset=latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Chango&display=swap" rel="stylesheet">
 	<script src="script.js"></script>
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</script>
+	
+	
+
 	
 	<!--[if lt IE 9]>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -42,49 +76,11 @@
 				<div class="row">
 				
 					<header style="width: 100%" class="text-center">
-						<h1 class="h4" style="margin-top:45px;"> Rejestracja </h1>
-					</header>
-		
-					<div class="input-center">
-						<span class="span-style">
-							<i class="demo-icon icon-user"></i>
-						</span>
-						<div class="input-style" style="float: left;">
-								<input type="text" class="form-control" placeholder="Imię" aria-label="imie" name="imie"  required>
-						</div>
-						<div class="clearclass">
-						</div>
-					</div>
-					
-					<div class="input-center">
-						<span class="span-style">
-							<i class="demo-icon icon-mail-alt"></i> 
-						</span>		
-						<div class="input-style" style="float: left;">
-							<input type="email" class="form-control" placeholder="E-mail" aria-label="email" name="email"  required>
-						</div>
-						<div class="clearclass">
-						</div>
-					</div>
-					
-					<div class="input-center">
-						<span class="span-style">
-							<i class="demo-icon icon-lock"></i>
-						</span>
-						<div class="input-password">
-							<input type="password" class="form-control" placeholder="Hasło" aria-label="hasło" name="passwd" id="passwd" required>
-							<i class="demo-icon icon-eye" onClick="showPwd('passwd', this)"></i> 
-						</div>
-						<div class="clearclass">
-						</div>
-					</div>
-						
-					<div class="input-center">
-						<input type="submit"  value="Rejestracja"> 
-					</div>
+						<h1 class="h4" style="margin-top:45px;"> Gratulacje! Konto zostało utworzone! </h1>
+					</header>	
 
-					<span class="menu-span mb-4">
-						Masz konto? <a href="index.html">Zaloguj się.</a>
+					<span class="menu-span mb-4 h1">
+						<a href="index.php">Zaloguj się!</a>
 					</span>
 				
 				</div>
@@ -99,7 +95,10 @@
 	</footer>
 	
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns" crossorigin="anonymous"></script>
 
 </body>
+
+
 </html>

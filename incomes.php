@@ -1,3 +1,49 @@
+<?php
+session_start();
+
+
+if(isset($_SESSION['logged_id'])) {
+	
+	
+	require_once 'database.php';
+	
+	$user_id = $_SESSION['logged_id'];
+	
+
+	$categoriesQuery = $db->prepare('SELECT id, name FROM incomes_category_assigned_to_users WHERE user_id = :user_id');
+	$categoriesQuery->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+	$categoriesQuery->execute();
+	$categories = $categoriesQuery ->fetchAll();
+	
+	
+
+	if (isset($_POST['amount'])) {
+	
+		$amount = $_POST['amount'];
+		$date_of_income = $_POST['incomeDate'];
+		$income_comment = $_POST['comment'];
+		$incomeCategory = $_POST['incomesCategory'];
+		
+		$query = $db->prepare('INSERT INTO incomes VALUES (NULL, :user_id, :income_category_assigned_to_user_id, :amount, :date_of_income, :income_comment)');
+		$query->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$query->bindValue(':income_category_assigned_to_user_id', $incomeCategory, PDO::PARAM_STR);
+		$query->bindValue(':amount', $amount, PDO::PARAM_STR);
+		$query->bindValue(':date_of_income', $date_of_income, PDO::PARAM_STR);
+		$query->bindValue(':income_comment', $income_comment, PDO::PARAM_STR);
+		$query->execute();
+		$_SESSION['przychod_dodany']="Przychód został dodany pomyślnie!"; 
+		
+	}
+
+		
+
+	} else {	
+		header('Location: index.php');
+		exit();	
+	}
+?>
+
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -5,7 +51,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	
-	<title>Dodawanie wydatku</title>
+	<title>Dodawanie przychodu</title>
 	<meta name="description" content="Aplikacja do zarządzania finansami.">
 	<meta name="keywords" content="pieniadze, finanse, zarzadzanie, oszczedzanie">
 	<meta name="author" content="Mateusz Kłosek">
@@ -51,22 +97,22 @@
 				<ul class="navbar-nav mr-auto">
 				
 					<li class="nav-item">
-						<a href="main.html">Strona główna</a>
+						<a href="main.php">Strona główna</a>
 					</li>
 					<li class="nav-item">
-						<a href="incomes.html">Dodaj przychód</a>
+						<a href="incomes.php">Dodaj przychód</a>
 					</li>
 					<li class="nav-item">	
-						<a href="expenses.html">Dodaj wydatek</a>
+						<a href="expenses.php">Dodaj wydatek</a>
 					</li>
 					<li class="nav-item">
-						<a href="balance.html">Przeglądaj bilans</a>
+						<a href="balance.php">Przeglądaj bilans</a>
 					</li>
 					<li class="nav-item">
-						<a href="settings.html">Ustawienia</a>
+						<a href="settings.php">Ustawienia</a>
 					</li>
 					<li class="nav-item">
-						<a href="index.html">Wyloguj się</a>
+						<a href="logout.php">Wyloguj się</a>
 					</li>
 					
 				</ul>
@@ -84,11 +130,20 @@
 			<div class="container col-11 col-lg-5 text-center mt-5">
 			
 				<header>
-						<h3 class="h4 mt-4">Dodawanie wydatku</h3>
+						<h3 class="h4 mt-4">Dodawanie przychodu</h3>
 				</header>
 				
 				
-					<form action="order.php" method="post" enctype="multipart/form-data">
+				
+					<form method="post">
+					
+					<?php
+								if (isset($_SESSION['przychod_dodany']))
+								{
+									echo '<div class="text-success center mt-2">'.$_SESSION['przychod_dodany'].'</div>';
+									unset($_SESSION['przychod_dodany']);
+								}
+						?>
 
 					<div class="input-center">
 						<span class="span-style">
@@ -106,26 +161,10 @@
 							<i class="bi bi-calendar"></i>
 						</span>
 						<div class="input-style" style="float: left;">
-							<input id="transactionDate" type="date" class="form-control" aria-label="data" name="expenseDate"  value="Data" min="2000-01-01" ##max="{{ lastDate }}" required>
+							<input id="transactionDate" type="date" class="form-control" aria-label="data" name="incomeDate"  value="Data" min="2000-01-01" required>
 						</div>
 						<div class="clearclass">
 						</div>
-					</div>
-						
-					<div class="input-center">
-						<span class="span-style">
-							<i class="bi bi-card-list"></i>
-						</span>
-						<div class="input-style" style="float: left;">
-							<select id="paymentCategory" data-live-search="true" name="paymentMethod">
-								<option value="0" selected disabled>Sposób płatności:</option>
-								<option value="1">Gotówka</option>
-								<option value="2">Karta kredytowa</option>
-								<option value="3">Karta debetowa</option>
-							</select>
-						</div>
-						<div class="clearclass">
-						</div>	
 					</div>
 					
 					<div class="input-center">
@@ -133,25 +172,20 @@
 							<i class="bi bi-cart"></i>
 						</span>
 						<div class="input-style" style="float: left;">
-							<select id="expensesCategory" data-live-search="true" name="expensesCategory">
-								<option value="0" selected disabled>Kategoria:</option>
-								<option value="1">Mieszkanie</option>
-								<option value="2">Transport</option>
-								<option value="3">Telekomunikacja</option>
-								<option value="4">Opieka zdrowotna</option>
-								<option value="5">Ubranie</option>
-								<option value="6">Dzieci</option>
-								<option value="7">Higiena</option>
-								<option value="8">Rozrywka</option>
-								<option value="9">Wycieczka</option>
-								<option value="10">Szkolenia</option>
-								<option value="11">Książki</option>
-								<option value="12">Oszzczędności</option>
-								<option value="13">Na złotą jesień, czyli emeryturę</option>
-								<option value="14">Spłata długów</option>
-								<option value="15">Darowina</option>
-								<option value="16">Inne wydatki</option>						
-									</select>
+							<select id="expensesCategory" data-live-search="true" name="incomesCategory">
+								<option  selected disabled>Kategoria:</option>
+								<?php
+									foreach ($categories as $category) {
+										echo "<option value='{$category["id"]}'> {$category["name"]} </option>";
+									}
+								?>
+							
+								<!-- <option value="0" selected disabled>Kategoria:</option>
+								<option value="1">Wynagrodzenie</option>
+								<option value="2">Odsetki bankowe</option>
+								<option value="3">Sprzedaż internetowa</option>
+								<option value="4">Prezent</option>
+								<option value="5">Inne</option>	-->				
 							</select>
 						</div>
 						<div class="clearclass">
@@ -159,8 +193,8 @@
 					</div>
 					
 						<div style="margin-top: 15px;">
-							<div><label for="komentarz"> Komentarz (opcjonalnie):</label></div>
-							<textarea name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="10"></textarea>
+							<div><label for="comment"> Komentarz (opcjonalnie):</label></div>
+							<textarea  name="comment" id="comment" rows="4" cols="80" maxlength="120" minlength="1"></textarea>
 						</div>
 						<div style="margin-bottom: 30px;">
 							<input id="a1" type="submit" value="Dodaj">

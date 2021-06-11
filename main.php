@@ -1,3 +1,55 @@
+<?php
+session_start();
+
+require_once 'database.php';
+
+if(!isset($_SESSION['logged_id'])) {
+
+	if (isset($_POST['email'])) {
+		
+		$login = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+		$password = filter_input(INPUT_POST, 'password');
+		
+		$_SESSION['given_email'] = $_POST['email'];
+		
+			//echo $login . " " . $password;
+
+		$userQuery = $db->prepare('Select id, password FROM users WHERE email = :login');
+		$userQuery->bindValue(':login', $login, PDO::PARAM_STR);
+		$userQuery->execute();
+		
+		//echo $userQuery->rowCount();
+		
+		$user = $userQuery->fetch();
+		
+		//echo $user['id'] . " " . $user['password'];
+		
+		if ($user && password_verify($password, $user['password'])){
+		$_SESSION['logged_id'] = $user['id'];
+		unset($_SESSION['bed_attempt']);
+		unset($_SESSION['given_email']);
+		} else {
+			$_SESSION['bad_attempt'] = true;
+			header('Location: index.php');
+			exit(); 
+		} 
+		
+
+		
+
+	} else {	
+		header('Location: index.php');
+		exit();	
+	}
+}
+
+$usersQuery = $db->query('SELECT * FROM users');
+$users = $usersQuery->fetchAll();
+
+//print_r($users);
+ 
+?>
+
 <!DOCTYPE html>
 <html lang="pl">
 
@@ -48,22 +100,22 @@
 				<ul class="navbar-nav mr-auto">
 				
 					<li class="nav-item">
-						<a href="main.html">Strona główna</a>
+						<a href="main.php">Strona główna</a>
 					</li>
 					<li class="nav-item">
-						<a href="incomes.html">Dodaj przychód</a>
+						<a href="incomes.php">Dodaj przychód</a>
 					</li>
 					<li class="nav-item">	
-						<a href="expenses.html">Dodaj wydatek</a>
+						<a href="expenses.php">Dodaj wydatek</a>
 					</li>
 					<li class="nav-item">
-						<a href="balance.html">Przeglądaj bilans</a>
+						<a href="balance.php">Przeglądaj bilans</a>
 					</li>
 					<li class="nav-item">
-						<a href="settings.html">Ustawienia</a>
+						<a href="settings.php">Ustawienia</a>
 					</li>
 					<li class="nav-item">
-						<a href="index.html">Wyloguj się</a>
+						<a href="logout.php">Wyloguj się</a>
 					</li>
 					
 				</ul>
